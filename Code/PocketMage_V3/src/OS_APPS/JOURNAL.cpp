@@ -20,12 +20,12 @@ void JOURNAL_INIT() {
 // File Operations
 void loadJournal() {
   SD().setEditingFile(currentJournal);
-  pocketmage::file::loadFile();
+  SD().loadFile();
 }
 
 void saveJournal() {
   SD().setEditingFile(currentJournal);
-  pocketmage::file::saveFile();
+  SD().saveFile();
 }
 
 // Functions

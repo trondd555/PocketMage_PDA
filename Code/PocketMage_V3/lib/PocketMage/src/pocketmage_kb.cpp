@@ -651,9 +651,6 @@ void close_USBHID(void) {
   ESP_LOGI(TAG, "USB HID closed successfully");
 }
 
-#pragma region keypad
-// =========================================== Keypad =========================================== //
-
 
 #pragma region keymaps
 // ===================== Keymaps =====================

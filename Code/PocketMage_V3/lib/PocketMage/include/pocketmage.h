@@ -10,3 +10,4 @@
 #include <MP2722.h>
 #include <config.h>
 #include <libAssets.h>
+#include <Preferences.h>

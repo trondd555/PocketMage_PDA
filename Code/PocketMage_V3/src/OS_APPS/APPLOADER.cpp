@@ -615,8 +615,7 @@ void einkHandler_APPLOADER() {
     case MENU:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
+        EINK().resetDisplay(false);
         display.drawBitmap(0, 0, _appLoader, 320, 218, GxEPD_BLACK);
 
         loadAndDrawAppIcon(42 , 146, 1, true, 7);  // OTA1

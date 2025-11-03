@@ -13,7 +13,7 @@
 #define TOUCH_TIMEOUT_MS 1200                   // Delay after scrolling to return to typing mode (ms)
 #define SYS_METADATA_FILE "/sys/SDMMC_META.txt" // File path to the file system metadata file
 #define POWER_SAVE_FREQ 40                      // CPU freq for power save mode
-#define OTA_APP false                           // Is this an OTA APP?
+#define OTA_APP false                           // Is this an OTA APP? // OTA_APP: set true for OTA builds
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////|
 
 // PIN DEFINITION

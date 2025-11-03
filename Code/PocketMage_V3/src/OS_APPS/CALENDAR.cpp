@@ -97,7 +97,7 @@ void updateEventsFile() {
   setCpuFrequencyMhz(240);
   delay(50);
   // Clear the existing calendarEvents file first
-  pocketmage::file::delFile("/sys/events.txt");
+  SD().delFile("/sys/events.txt");
 
   // Iterate through the calendarEvents vector and append each task to the file
   for (size_t i = 0; i < calendarEvents.size(); i++) {
@@ -105,7 +105,7 @@ void updateEventsFile() {
     String eventInfo = calendarEvents[i][0] + "|" + calendarEvents[i][1] + "|" + calendarEvents[i][2] + "|" + calendarEvents[i][3]+ "|" + calendarEvents[i][4]+ "|" + calendarEvents[i][5];
     
     // Append the task info to the file
-    pocketmage::file::appendToFile("/sys/events.txt", eventInfo);
+    SD().appendToFile("/sys/events.txt", eventInfo);
   }
 
   if (SAVE_POWER) setCpuFrequencyMhz(POWER_SAVE_FREQ);
@@ -1566,9 +1566,7 @@ void einkHandler_CALENDAR() {
     case WEEK:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         drawCalendarWeek(weekOffsetCount);
@@ -1581,9 +1579,7 @@ void einkHandler_CALENDAR() {
     case MONTH:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         drawCalendarMonth(monthOffsetCount);
@@ -1596,9 +1592,7 @@ void einkHandler_CALENDAR() {
     case NEW_EVENT:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         display.drawBitmap(0, 0, calendar_allArray[2], 320, 218, GxEPD_BLACK);
 
@@ -1629,9 +1623,7 @@ void einkHandler_CALENDAR() {
     case VIEW_EVENT:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         switch(newEventState) {
           case -1:
@@ -1677,9 +1669,7 @@ void einkHandler_CALENDAR() {
     case SAT:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // Draw background
         // CurrentCalendarState enumerations somehow line up with calendar app bitmaps?

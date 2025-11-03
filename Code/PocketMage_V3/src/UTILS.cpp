@@ -70,13 +70,13 @@ void checkTimeout() {
 
                 // Put device to sleep with alternate sleep screen
                 */
-                pocketmage::power::deepSleep(true);
+                pocketmage::deepSleep(true);
             } else
-                pocketmage::power::deepSleep();
+                pocketmage::deepSleep();
             break;
 
             default:
-            pocketmage::power::deepSleep();
+            pocketmage::deepSleep();
             break;
         }
 
@@ -141,14 +141,14 @@ void checkTimeout() {
                 display.fillRect(320 - 86, 240 - 52, 87, 52, GxEPD_WHITE);
                 display.drawBitmap(320 - 86, 240 - 52, sleep1, 87, 52, GxEPD_BLACK);
 
-                pocketmage::power::deepSleep(true);
+                pocketmage::deepSleep(true);
             }
             // Sleep device normally
             else
-                pocketmage::power::deepSleep();
+                pocketmage::deepSleep();
             break;
             default:
-            pocketmage::power::deepSleep();
+            pocketmage::deepSleep();
             break;
         }
         }
@@ -280,7 +280,7 @@ void updateBattState() {
                 saveEditingFile();
 
                 // Put device to sleep
-                pocketmage::power::deepSleep(false);
+                pocketmage::deepSleep(false);
             }
         }
 

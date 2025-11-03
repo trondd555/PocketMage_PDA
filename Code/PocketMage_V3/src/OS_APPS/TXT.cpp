@@ -18,7 +18,7 @@ static volatile bool doFull = false;
 
 
 void TXT_INIT_OLD() {
-  if (SD().getEditingFile() != "") pocketmage::file::loadFile();
+  if (SD().getEditingFile() != "") SD().loadFile();
   CurrentAppState = TXT;
   CurrentTXTState = TXT_;
   KB().setKeyboardState(NORMAL);
@@ -102,7 +102,7 @@ void processKB_TXT_OLD() {
         else if (inchar == 6) {
           //File exists, save normally
           if (SD().getEditingFile() != "" && SD().getEditingFile() != "-") {
-            pocketmage::file::saveFile();
+            SD().saveFile();
             KB().setKeyboardState(NORMAL);
             newLineAdded = true;
           }
@@ -117,7 +117,7 @@ void processKB_TXT_OLD() {
         }
         //LOAD Recieved
         else if (inchar == 5) {
-          pocketmage::file::loadFile();
+          SD().loadFile();
           KB().setKeyboardState(NORMAL);
           newLineAdded = true;
         }
@@ -265,11 +265,11 @@ void processKB_TXT_OLD() {
             //File to be saved exists
             else {
               //Save current file
-              pocketmage::file::saveFile();
+              SD().saveFile();
 
               delay(200);
               //Load new file
-              pocketmage::file::loadFile();
+              SD().loadFile();
               //Return to TXT
               CurrentTXTState = TXT_;
               KB().setKeyboardState(NORMAL);
@@ -282,7 +282,7 @@ void processKB_TXT_OLD() {
           //NO  (don't save current file)
           else if (numSelect == 2) {
             //Just load new file
-            pocketmage::file::loadFile();
+            SD().loadFile();
             //Return to TXT
             CurrentTXTState = TXT_;
             KB().setKeyboardState(NORMAL);
@@ -333,11 +333,11 @@ void processKB_TXT_OLD() {
           prevEditingFile = "/" + currentWord + ".txt";
 
           //Save the file
-          pocketmage::file::saveFile();
+          SD().saveFile();
 
           delay(200);
           //Load new file
-          pocketmage::file::loadFile();
+          SD().loadFile();
 
           keypad.enableInterrupts();
 
@@ -395,7 +395,7 @@ void processKB_TXT_OLD() {
           prevEditingFile = "/" + currentWord + ".txt";
 
           //Save the file
-          pocketmage::file::saveFile();
+          SD().saveFile();
           //Ask to save prev file
           
           //Return to TXT_
@@ -495,9 +495,7 @@ void einkHandler_TXT_OLD() {
     switch (CurrentTXTState) {
       case TXT_:
         if (newState && doFull) {
-          display.setRotation(3);
-          display.setFullWindow();
-          display.fillScreen(GxEPD_WHITE);
+          EINK().resetDisplay();
           EINK().refresh();
         }
         if (newLineAdded && !newState) {

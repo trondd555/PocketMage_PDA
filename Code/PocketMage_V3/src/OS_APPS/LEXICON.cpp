@@ -221,8 +221,7 @@ void einkHandler_LEXICON() {
     case MENU:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
+        EINK().resetDisplay(false);
         display.drawBitmap(0, 0, _lex0, 320, 218, GxEPD_BLACK);
 
         EINK().drawStatusBar("Type a Word:");

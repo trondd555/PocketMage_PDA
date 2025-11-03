@@ -405,7 +405,7 @@ void processKB_FILEWIZ() {
         // Y RECIEVED
         else if (inchar == 'y' || inchar == 'Y') {
           // DELETE FILE
-          pocketmage::file::delFile(SD().getWorkingFile());
+          SD().delFile(SD().getWorkingFile());
           
           // RETURN TO FILE WIZ HOME
           refreshFiles = true;
@@ -474,7 +474,7 @@ void processKB_FILEWIZ() {
         else if (inchar == 13) {      
           // RENAME FILE                    
           String newName = "/" + currentWord + ".txt";
-          pocketmage::file::renFile(SD().getWorkingFile(), newName);
+          SD().renFile(SD().getWorkingFile(), newName);
 
           // RETURN TO WIZ0
           refreshFiles = true;
@@ -546,7 +546,7 @@ void processKB_FILEWIZ() {
         else if (inchar == 13) {      
           // Copy FILE                    
           String newName = "/" + currentWord + ".txt";
-          pocketmage::file::copyFile(SD().getWorkingFile(), newName);
+          SD().copyFile(SD().getWorkingFile(), newName);
 
           // RETURN TO WIZ0
           refreshFiles = true;
@@ -583,9 +583,7 @@ void einkHandler_FILEWIZ() {
     case WIZ0_:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         EINK().drawStatusBar("Select a File (0-9)");
@@ -609,9 +607,7 @@ void einkHandler_FILEWIZ() {
     case WIZ1_:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         EINK().drawStatusBar("- " + SD().getWorkingFile());
@@ -623,9 +619,7 @@ void einkHandler_FILEWIZ() {
     case WIZ1_YN:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         EINK().drawStatusBar("DEL:" + SD().getWorkingFile() + "?(Y/N)");
@@ -637,9 +631,7 @@ void einkHandler_FILEWIZ() {
     case WIZ2_R:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         EINK().drawStatusBar("Enter New Filename:");
@@ -651,9 +643,7 @@ void einkHandler_FILEWIZ() {
     case WIZ2_C:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         EINK().drawStatusBar("Enter Name For Copy:");

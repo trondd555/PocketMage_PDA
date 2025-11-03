@@ -168,8 +168,7 @@ void commandSelect(String command) {
 }
 
 void drawHome() {
-  display.setRotation(3);
-  display.fillScreen(GxEPD_WHITE);
+  EINK().resetDisplay();
   
   int16_t x1, y1;
   uint16_t charWidth, charHeight;

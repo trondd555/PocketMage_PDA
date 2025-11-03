@@ -19,7 +19,7 @@ void settingCommandSelect(String command) {
 
   if (command.startsWith("timeset ")) {
     String timePart = command.substring(8);
-    pocketmage::time::setTimeFromString(timePart);
+    CLOCK().setTimeFromString(timePart);
     return;
   }
   else if (command.startsWith("dateset ")) {

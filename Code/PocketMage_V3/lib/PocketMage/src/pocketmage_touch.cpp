@@ -25,8 +25,6 @@ void setupTouch(){
 // Access for other apps
 PocketmageTOUCH& TOUCH() { return pm_touch; }
 
-
-
 void PocketmageTOUCH::updateScrollFromTouch() {
   uint16_t touched = cap_.touched();
   int newTouch = -1;

@@ -40,7 +40,7 @@ void updateTasksFile() {
   setCpuFrequencyMhz(240);
   delay(50);
   // Clear the existing tasks file first
-  pocketmage::file::delFile("/sys/tasks.txt");
+  SD().delFile("/sys/tasks.txt");
 
   // Iterate through the tasks vector and append each task to the file
   for (size_t i = 0; i < tasks.size(); i++) {
@@ -48,7 +48,7 @@ void updateTasksFile() {
     String taskInfo = tasks[i][0] + "|" + tasks[i][1] + "|" + tasks[i][2] + "|" + tasks[i][3];
     
     // Append the task info to the file
-    pocketmage::file::appendToFile("/sys/tasks.txt", taskInfo);
+    SD().appendToFile("/sys/tasks.txt", taskInfo);
   }
 
   if (SAVE_POWER) setCpuFrequencyMhz(POWER_SAVE_FREQ);
@@ -318,9 +318,7 @@ void einkHandler_TASKS() {
     case TASKS0:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         display.drawBitmap(0, 0, tasksApp0, 320, 218, GxEPD_BLACK);
@@ -355,9 +353,7 @@ void einkHandler_TASKS() {
       case TASKS0_NEWTASK:
         if (newState) {
           newState = false;
-          display.setRotation(3);
-          display.setFullWindow();
-          display.fillScreen(GxEPD_WHITE);
+          EINK().resetDisplay();
 
           // DRAW APP
           display.drawBitmap(0, 0, tasksApp0, 320, 218, GxEPD_BLACK);
@@ -398,9 +394,7 @@ void einkHandler_TASKS() {
     case TASKS1:
       if (newState) {
         newState = false;
-        display.setRotation(3);
-        display.setFullWindow();
-        display.fillScreen(GxEPD_WHITE);
+        EINK().resetDisplay();
 
         // DRAW APP
         EINK().drawStatusBar("T:" + tasks[selectedTask][0]);

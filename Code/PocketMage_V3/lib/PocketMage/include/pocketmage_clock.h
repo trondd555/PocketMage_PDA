@@ -17,6 +17,7 @@ public:
   explicit PocketmageCLOCK(RTC_PCF8563 &rtc) : rtc_(rtc) {}
 
   bool begin();
+  void setTimeFromString(String timeStr);
   bool isValid();
 
   void setToCompileTimeUTC() { rtc_.adjust(DateTime(F(__DATE__), F(__TIME__))); }

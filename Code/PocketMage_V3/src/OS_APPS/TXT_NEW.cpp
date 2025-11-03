@@ -1282,7 +1282,7 @@ void saveMarkdownFile(const String& path) {
   file.close();
 
   // Save metadata
-  pocketmage::file::writeMetadata(savePath);
+  SD().writeMetadata(savePath);
   SD().setEditingFile(savePath);
 
   OLED().oledWord("Saved: " + savePath);
