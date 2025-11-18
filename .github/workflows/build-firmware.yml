@@ -45,9 +45,18 @@ jobs:
           echo "Listing recursively:"
           ls -lR .pio/build/PM_V3
 
-
       - name: Create the Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: pocketmage-artifacts
-          path: Code/PocketMage_V3/.pio/build/PM_V3/firmware.*
+          path: |
+            Code/PocketMage_V3/.pio/build/PM_V3/firmware.*
+            Code/PocketMage_V3/.pio/build/PM_V3/*.bin
+            Code/PocketMage_V3/.pio/build/PM_V3/flash_args
+
+      - name: List All Uploaded Binary Files for Debugging
+        run: |
+          echo "Uploaded files:"
+          ls -l Code/PocketMage_V3/.pio/build/PM_V3/*.bin
+          echo "Listing flash_args for verification:"
+          cat Code/PocketMage_V3/.pio/build/PM_V3/flash_args || echo "No flash_args file found."
