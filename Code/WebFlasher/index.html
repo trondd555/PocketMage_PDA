@@ -4,11 +4,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PocketMage Web Installer</title>
-
     <meta name="description" content="Flash firmware to your PocketMage device via USB using your web browser." />
     <meta name="author" content="Ashtf" />
     <meta name="keywords" content="PocketMage, firmware, web installer, esptool, ESP32, flash, USB, Web Serial API" />
+
+    <title>PocketMage Web Installer</title>
 
     <link rel="icon" href="./favicon.png" />
 
@@ -36,7 +36,7 @@
     <script type="module">
         import { ESPLoader, Transport } from "esptool-js";
 
-        // Make ESPLoader and Transport available globally
+        // Re-expose ESPLoader and Transport to the global scope
         window.ESPLoader = ESPLoader;
         window.Transport = Transport;
     </script>
@@ -66,7 +66,7 @@
 
         .site-header {
             background: var(--wp--preset--color--background);
-            padding: 16px 0;
+            padding: 60px 0 16px 0;
             border-bottom: 1px solid #e0e0e0;
             position: sticky;
             top: 0;
@@ -137,7 +137,6 @@
             margin: 0 0 min(32px, 6.4vw) 0;
             box-shadow: 4px 4px 0 currentColor;
             text-align: center;
-            position: sticky;
             top: 100px;
             z-index: 50;
         }
