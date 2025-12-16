@@ -293,23 +293,41 @@ static void installTask(void *param) {
 // --- Determine main .bin and base name ---
 String binPath = "";
 String base = "";
+	// --- Determine icon path ---
+String iconPath = "";
+String expectedIcon = base + "_ICON.bin";
 
-File tempRoot1 = SD_MMC.open(TEMP_DIR);
-if (tempRoot1 && tempRoot1.isDirectory()) {
+File tempRoot = SD_MMC.open(TEMP_DIR);
+if (tempRoot && tempRoot.isDirectory()) {
     File entry;
-    while ((entry = tempRoot1.openNextFile())) {
+    String expectedIcon; // will be set once base is known
+    while ((entry = tempRoot.openNextFile())) {
         String name = String(entry.name());
-        if (name.endsWith(".bin") && !name.endsWith("_ICON.bin")) {
+
+        // --- Main .bin ---
+        if (binPath.length() == 0 && name.endsWith(".bin") && !name.endsWith("_ICON.bin")) {
             binPath = pathJoin(TEMP_DIR, name);
-            // Derive base from the main .bin
+
+            // Derive base from main .bin
             int dot = name.lastIndexOf('.');
             if (dot > 0) base = name.substring(0, dot);
+
+            // Expected icon for later
+            expectedIcon = base + "_ICON.bin";
+
             entry.close();
-            break;
+            continue; // continue to check icon in same loop
+        }
+
+        // --- Icon file ---
+        if (iconPath.length() == 0 && expectedIcon.length() > 0 && name.equalsIgnoreCase(expectedIcon)) {
+            iconPath = pathJoin(TEMP_DIR, name);
+            entry.close();
+            continue;
         }
         entry.close();
     }
-    tempRoot1.close();
+    tempRoot.close();
 }
 
 if (binPath.length() == 0 || base.length() == 0) {
@@ -348,7 +366,7 @@ while (waitMs < 200) {
 }
 
 Serial.println("Listing /apps/temp:");
-File tempRoot = SD_MMC.open(TEMP_DIR);
+tempRoot = SD_MMC.open(TEMP_DIR);
 if (tempRoot && tempRoot.isDirectory()) {
     File entry;
     while ((entry = tempRoot.openNextFile())) {
@@ -469,24 +487,6 @@ if (SD_MMC.exists(assetsSrc.c_str())) {
 	} else {
 		Serial.println("Flash OK");
 
-		// --- Determine icon path ---
-String iconPath = "";
-String expectedIcon = base + "_ICON.bin";
-
-tempRoot = SD_MMC.open(TEMP_DIR);
-if (tempRoot && tempRoot.isDirectory()) {
-    File entry;
-    while ((entry = tempRoot.openNextFile())) {
-        String name = String(entry.name());
-        if (name.equalsIgnoreCase(expectedIcon)) {
-            iconPath = pathJoin(TEMP_DIR, name);
-            entry.close();
-            break;
-        }
-        entry.close();
-    }
-    tempRoot.close();
-}
 
 if (iconPath.length() == 0) {
     Serial.printf("Icon not found for app '%s'\n", base.c_str());
