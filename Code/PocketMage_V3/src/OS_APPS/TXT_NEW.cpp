@@ -680,6 +680,9 @@ void toolBar(wordObject& wordObj) {
       u8g2.drawStr((u8g2.getDisplayWidth() - u8g2.getStrWidth("FN")) / 2, u8g2.getDisplayHeight(),
                    "FN");
       break;
+    case 3:
+      u8g2.drawStr((u8g2.getDisplayWidth() - u8g2.getStrWidth("FN+SHIFT")) / 2, u8g2.getDisplayHeight(),
+                   "FN+SHIFT");
     default:
       break;
   }
@@ -1359,17 +1362,23 @@ void editAppend(char inchar) {
   }
   // SHIFT Recieved
   else if (inchar == 17) {
-    if (KB().getKeyboardState() == SHIFT)
+    if (KB().getKeyboardState() == SHIFT || KB().getKeyboardState() == FN_SHIFT) {
       KB().setKeyboardState(NORMAL);
-    else
+    } else if (KB().getKeyboardState() == FUNC) {
+      KB().setKeyboardState(FN_SHIFT);
+    } else {
       KB().setKeyboardState(SHIFT);
+    }
   }
   // FN Recieved
   else if (inchar == 18) {
-    if (KB().getKeyboardState() == FUNC)
+    if (KB().getKeyboardState() == FUNC || KB().getKeyboardState() == FN_SHIFT) {
       KB().setKeyboardState(NORMAL);
-    else
+    } else if (KB().getKeyboardState() == SHIFT) {
+      KB().setKeyboardState(FN_SHIFT);
+    } else {
       KB().setKeyboardState(FUNC);
+    }
   }
   // Space Recieved
   else if (inchar == 32) {
@@ -1876,15 +1885,25 @@ void processKB_TXT_NEW() {
           
           currentLine = "";
         }                                      
-        //SHIFT Recieved
-        else if (inchar == 17) {                                  
-          if (KB().getKeyboardState() == SHIFT) KB().setKeyboardState(NORMAL);
-          else KB().setKeyboardState(SHIFT);
-        }
-        //FN Recieved
-        else if (inchar == 18) {                                  
-          if (KB().getKeyboardState() == FUNC) KB().setKeyboardState(NORMAL);
-          else KB().setKeyboardState(FUNC);
+        // SHIFT Recieved
+        else if (inchar == 17) {
+          if (KB().getKeyboardState() == SHIFT || KB().getKeyboardState() == FN_SHIFT) {
+            KB().setKeyboardState(NORMAL);
+          } else if (KB().getKeyboardState() == FUNC) {
+            KB().setKeyboardState(FN_SHIFT);
+          } else {
+            KB().setKeyboardState(SHIFT);
+          }
+        } 
+        // FN Recieved
+        else if (inchar == 18) {
+          if (KB().getKeyboardState() == FUNC || KB().getKeyboardState() == FN_SHIFT) {
+            KB().setKeyboardState(NORMAL); 
+          } else if (KB().getKeyboardState() == SHIFT) {
+            KB().setKeyboardState(FN_SHIFT);
+          } else {
+            KB().setKeyboardState(FUNC);
+          }   
         }
         //Space Recieved
         else if (inchar == 32) {                                  
