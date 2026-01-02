@@ -200,6 +200,12 @@ String renderWizMini(String folder, int8_t scrollDelta) {
       u8g2.setDrawColor(1);
       u8g2.drawStr((u8g2.getDisplayWidth() - u8g2.getStrWidth("FN")), u8g2.getDisplayHeight(), "FN");
       break;
+    case 3:
+      u8g2.setDrawColor(0);
+      u8g2.drawBox(u8g2.getDisplayWidth() - u8g2.getStrWidth("FN+SHIFT"), u8g2.getDisplayHeight(), u8g2.getStrWidth("FN+SHIFT"), -8);
+      u8g2.setDrawColor(1);
+      u8g2.drawStr((u8g2.getDisplayWidth() - u8g2.getStrWidth("FN+SHIFT")), u8g2.getDisplayHeight(), "FN+SHIFT");
+      break;
   }
 
   u8g2.sendBuffer();
@@ -232,17 +238,23 @@ String fileWizardMini(bool allowRecentSelect, String rootDir) {
     if (inchar == 0);
     // SHIFT Recieved
     else if (inchar == 17) {
-      if (KB().getKeyboardState() == SHIFT)
+      if (KB().getKeyboardState() == SHIFT || KB().getKeyboardState() == FN_SHIFT) {
         KB().setKeyboardState(NORMAL);
-      else
+      } else if (KB().getKeyboardState() == FUNC) {
+        KB().setKeyboardState(FN_SHIFT);
+      } else {
         KB().setKeyboardState(SHIFT);
+      }
     }
     // FN Recieved
     else if (inchar == 18) {
-      if (KB().getKeyboardState() == FUNC)
+      if (KB().getKeyboardState() == FUNC || KB().getKeyboardState() == FN_SHIFT) {
         KB().setKeyboardState(NORMAL);
-      else
+      } else if (KB().getKeyboardState() == SHIFT) {
+        KB().setKeyboardState(FN_SHIFT);
+      } else {
         KB().setKeyboardState(FUNC);
+      }
     }
     // Left received
     else if (inchar == 19) {
@@ -442,15 +454,25 @@ void processKB_FILEWIZ() {
         char inchar = KB().updateKeypress();
         //No char recieved
         if (inchar == 0);                                         
-        //SHIFT Recieved
-        else if (inchar == 17) {                                  
-          if (KB().getKeyboardState() == SHIFT) KB().setKeyboardState(NORMAL);
-          else KB().setKeyboardState(SHIFT);
+        // SHIFT Recieved
+        else if (inchar == 17) {
+          if (KB().getKeyboardState() == SHIFT || KB().getKeyboardState() == FN_SHIFT) {
+            KB().setKeyboardState(NORMAL);
+          } else if (KB().getKeyboardState() == FUNC) {
+            KB().setKeyboardState(FN_SHIFT);
+          } else {
+            KB().setKeyboardState(SHIFT);
+          }
         }
-        //FN Recieved
-        else if (inchar == 18) {                                  
-          if (KB().getKeyboardState() == FUNC) KB().setKeyboardState(NORMAL);
-          else KB().setKeyboardState(FUNC);
+        // FN Recieved
+        else if (inchar == 18) {
+          if (KB().getKeyboardState() == FUNC || KB().getKeyboardState() == FN_SHIFT) {
+            KB().setKeyboardState(NORMAL);
+          } else if (KB().getKeyboardState() == SHIFT) {
+            KB().setKeyboardState(FN_SHIFT);
+          } else {
+            KB().setKeyboardState(FUNC);
+          }
         }
         //Space Recieved
         else if (inchar == 32) {}
@@ -514,15 +536,25 @@ void processKB_FILEWIZ() {
         char inchar = KB().updateKeypress();
         //No char recieved
         if (inchar == 0);                                         
-        //SHIFT Recieved
-        else if (inchar == 17) {                                  
-          if (KB().getKeyboardState() == SHIFT) KB().setKeyboardState(NORMAL);
-          else KB().setKeyboardState(SHIFT);
+        // SHIFT Recieved
+        else if (inchar == 17) {
+          if (KB().getKeyboardState() == SHIFT || KB().getKeyboardState() == FN_SHIFT) {
+            KB().setKeyboardState(NORMAL);
+          } else if (KB().getKeyboardState() == FUNC) {
+            KB().setKeyboardState(FN_SHIFT);
+          } else {
+            KB().setKeyboardState(SHIFT);
+          }
         }
-        //FN Recieved
-        else if (inchar == 18) {                                  
-          if (KB().getKeyboardState() == FUNC) KB().setKeyboardState(NORMAL);
-          else KB().setKeyboardState(FUNC);
+        // FN Recieved
+        else if (inchar == 18) {
+          if (KB().getKeyboardState() == FUNC || KB().getKeyboardState() == FN_SHIFT) {
+            KB().setKeyboardState(NORMAL);
+          } else if (KB().getKeyboardState() == SHIFT) {
+            KB().setKeyboardState(FN_SHIFT);
+          } else {
+            KB().setKeyboardState(FUNC);
+          }
         }
         //Space Recieved
         else if (inchar == 32) {}
